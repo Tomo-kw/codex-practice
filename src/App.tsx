@@ -11,7 +11,7 @@ import {
   Text,
   chakra,
 } from "@chakra-ui/react";
-import { FormEvent, useState } from "react";
+import { FormEvent, useMemo, useState } from "react";
 
 type Todo = {
   id: number;
@@ -49,16 +49,14 @@ const App = () => {
     );
   };
 
-  // TODOを作成する
   const handleRemove = (id: number) => {
     setTodos((prev) => prev.filter((todo) => todo.id !== id));
   };
 
-  // TODOを削除する
-  const summary = () => {
+  const summary = useMemo(() => {
     const completed = todos.filter((todo) => todo.done).length;
     return { completed, remaining: todos.length - completed };
-  };
+  }, [todos]);
 
   return (
     <Box
